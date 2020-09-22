@@ -1,0 +1,10 @@
+@host=http://localhost:3000/stock
+
+PUT {{host}}/6
+Content-Type: application/json
+
+{
+  "name":"Sony A7R IV",
+  "price":"124900",
+  "stock":"25"
+}

@@ -1,0 +1,10 @@
+@host=http://localhost:3000/stock
+
+POST {{host}} HTTP/1.1
+content-type: application/json
+
+{
+    "name":"Nikon Z7",
+    "price":129000,
+    "stock": 22
+}

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotAcceptableException,
   Param,
   Post,
   Put,
@@ -44,14 +45,25 @@ export class StockController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './upload',
-        filename: (req, file, cd) => {
+        filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
-          return cd(null, `${randomName}${extname(file.originalname)}`);
+          return cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
+      fileFilter: (req, file, cb) => {
+        const ext = extname(file.originalname);
+        if (ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg') {
+          return cb(null, true);
+        } else {
+          const err = new NotAcceptableException(
+            `File type: ${ext} is not supported, Please provide .jpg or .png`,
+          );
+          return cb(err, false);
+        }
+      },
     }),
   )
   @UsePipes(ValidationPipe)
@@ -79,14 +91,25 @@ export class StockController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './upload',
-        filename: (req, file, cd) => {
+        filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
-          return cd(null, `${randomName}${extname(file.originalname)}`);
+          return cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
+      fileFilter: (req, file, cb) => {
+        const ext = extname(file.originalname);
+        if (ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg') {
+          return cb(null, true);
+        } else {
+          const err = new NotAcceptableException(
+            `File type: ${ext} is not supported, Please provide .jpg or .png`,
+          );
+          return cb(err, false);
+        }
+      },
     }),
   )
   async updateProductById(

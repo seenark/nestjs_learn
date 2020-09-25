@@ -56,7 +56,6 @@ export class StockService {
       query.andWhere('LOWER(Products.name) LIKE LOWER(:keyword)', {
         keyword: `%${keyword}%`,
       });
-      console.log(query);
       return await query.getMany();
     } else {
       return this.getAllProducts();

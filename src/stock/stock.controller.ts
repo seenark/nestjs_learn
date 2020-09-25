@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UploadedFile,
   UseInterceptors,
   UsePipes,
@@ -21,8 +22,10 @@ import { StockService } from './stock.service';
 import { diskStorage } from 'multer';
 import * as fsExtra from 'fs-extra';
 import { extname } from 'path';
+import { LoggerInterceptor } from 'src/logger.interceptor';
 
 @Controller('stock')
+@UseInterceptors(LoggerInterceptor)
 export class StockController {
   constructor(private stockService: StockService) {}
 
@@ -31,7 +34,8 @@ export class StockController {
   //   return this.stockService.getAllProducts();
   // }
   @Get()
-  getProductsByKeyword(@Query('keyword') keyword: string) {
+  getProductsByKeyword(@Query('keyword') keyword: string, @Req() req:any) {
+    console.log("timestamp: ",req.timestamp)
     return this.stockService.getProductsByKeyword(keyword);
   }
 

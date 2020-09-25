@@ -13,4 +13,8 @@ export class AuthService {
   signUp(userCredentialDto: UserCredentialDto): Promise<User> {
     return this.userRepository.createUser(userCredentialDto);
   }
+
+  signIn(userCredentialDto:UserCredentialDto) {
+    return this.userRepository.verifyUserPassword(userCredentialDto)
+  }
 }

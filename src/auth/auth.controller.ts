@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  HttpCode,
+  HttpStatus,
   Post,
   UsePipes,
   ValidationPipe,
@@ -23,7 +25,8 @@ export class AuthController {
 
   /* sign in */
   @Post('/signin')
+  @HttpCode(200)
   signIn(@Body() userCredential: UserCredentialDto) {
-    console.log(userCredential);
+    return this.authService.signIn(userCredential);
   }
 }

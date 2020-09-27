@@ -35,7 +35,7 @@ export class UserRepository extends Repository<User> {
   }
 
 
-  async verifyUserPassword(userCredentialDto:UserCredentialDto) {
+  async verifyUserPassword(userCredentialDto:UserCredentialDto):Promise<string> {
     const { username, password } = userCredentialDto
     const user = await this.findOne({username:username})
     if (user) {

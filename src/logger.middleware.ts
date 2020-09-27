@@ -7,7 +7,7 @@ import {
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: any, res: any, next: () => void) {
-    console.log(req)
+    // console.log(req)
     // const { keyword } = req.query;
     // if (keyword) {
     //   console.log(keyword);

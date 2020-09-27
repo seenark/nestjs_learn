@@ -1,0 +1,8 @@
+@host=http://localhost:3000/auth/test
+
+
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjAxMjE0NjgwLCJleHAiOjE2MDEyMTQ4NjB9.cRSp7CmuFn1_xufje2uY8TnwtRfeQtPM1vld1CiJKHo
+
+# @name test
+GET {{host}} HTTP/1.1
+Authorization: Bearer {{authToken}}

@@ -34,8 +34,8 @@ export class StockController {
   //   return this.stockService.getAllProducts();
   // }
   @Get()
-  getProductsByKeyword(@Query('keyword') keyword: string, @Req() req:any) {
-    console.log("timestamp: ",req.timestamp)
+  getProductsByKeyword(@Query('keyword') keyword: string, @Req() req: any) {
+    console.log('timestamp: ', req.timestamp);
     return this.stockService.getProductsByKeyword(keyword);
   }
 

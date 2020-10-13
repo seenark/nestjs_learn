@@ -17,9 +17,14 @@ export class AuthService {
   }
 
   async signIn(userCredentialDto: UserCredentialDto) {
-    const username = await this.userRepository.verifyUserPassword(userCredentialDto)
-      const payload = { username: username };
-      const token = this.jwtService.sign(payload);
-      return {token};
+    const username = await this.userRepository.verifyUserPassword(
+      userCredentialDto,
+    );
+    const payload = {
+      username: username,
+      role: 'admin',
+    };
+    const token = this.jwtService.sign(payload);
+    return { token };
   }
 }

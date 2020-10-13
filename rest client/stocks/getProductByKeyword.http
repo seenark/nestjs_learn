@@ -1,3 +1,4 @@
 @host=http://localhost:3000/stock
 
 GET {{host}}?keyword=canon
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAxNDY2MzYxLCJleHAiOjE2MDE0NjgxNjF9.lg0i_L9D8ieSBfAlM-omiKGgftqCFFK-kieTEgAp8ic

@@ -10,6 +10,7 @@ import {
   Query,
   Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -23,6 +24,9 @@ import { diskStorage } from 'multer';
 import * as fsExtra from 'fs-extra';
 import { extname } from 'path';
 import { LoggerInterceptor } from 'src/logger.interceptor';
+import { Roles } from 'src/decorator/roles.decorator';
+import { RolesGuard } from 'src/roles.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('stock')
 @UseInterceptors(LoggerInterceptor)
@@ -34,6 +38,9 @@ export class StockController {
   //   return this.stockService.getAllProducts();
   // }
   @Get()
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('admin')
   getProductsByKeyword(@Query('keyword') keyword: string, @Req() req: any) {
     console.log('timestamp: ', req.timestamp);
     return this.stockService.getProductsByKeyword(keyword);
@@ -78,7 +85,7 @@ export class StockController {
   ) {
     const product = await this.stockService.createProduct(createStockDto);
     const fileExtension = extname(file.filename);
-    fsExtra.move(file.path, `./upload/${product.id}${fileExtension}`);
+    fsExtra.move(file.path, `./upload/images/${product.id}${fileExtension}`);
     const imageFileName = product.id + fileExtension;
     product.imageName = imageFileName;
     await product.save();
@@ -127,7 +134,7 @@ export class StockController {
     // if user upload file also then delete old file and save new file
     if (file) {
       // remove
-      await fsExtra.remove(`./upload/${imageName}`);
+      await fsExtra.remove(`./upload/images/${imageName}`);
       // get extension of file
       const fileExtension = extname(file.filename);
       // rename and add the extension

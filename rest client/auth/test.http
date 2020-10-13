@@ -1,7 +1,7 @@
 @host=http://localhost:3000/auth/test
 
 
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjAxMjE0NjgwLCJleHAiOjE2MDEyMTQ4NjB9.cRSp7CmuFn1_xufje2uY8TnwtRfeQtPM1vld1CiJKHo
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjAyMTg0MTUyLCJleHAiOjE2MDIxODU5NTJ9.yAAfEJn2mhlj5kPnReoCZj5yE67IetiMMzSKMpKPXOo
 
 # @name test
 GET {{host}} HTTP/1.1

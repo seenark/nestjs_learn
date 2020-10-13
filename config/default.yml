@@ -1,0 +1,8 @@
+server:
+  port: 3000
+  origin: localhost
+db:
+  port: 5432
+  database: cmstock
+  username: postgres
+  password: 11111111

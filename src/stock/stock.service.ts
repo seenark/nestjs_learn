@@ -34,7 +34,7 @@ export class StockService {
   async deleteProductById(id: number): Promise<DeleteResult> {
     const product = await this.getProductById(id);
     const { imageName } = product;
-    await fsExtra.remove(`upload/${imageName}`);
+    await fsExtra.remove(`upload/images/${imageName}`);
     return await this.productRepository.delete(id);
   }
 

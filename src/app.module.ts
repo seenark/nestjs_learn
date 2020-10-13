@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,8 +8,18 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './logger.middleware';
 import { StockController } from './stock/stock.controller';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
-  imports: [StockModule, TypeOrmModule.forRoot(typeOrmConfig), AuthModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'upload'),
+    }),
+    StockModule,
+    TypeOrmModule.forRoot(typeOrmConfig),
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

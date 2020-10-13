@@ -6,19 +6,19 @@ import {
 import { EntityRepository, Repository } from 'typeorm';
 import { UserCredentialDto } from './dto/user-credentail.dto';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(userCredentialDto: UserCredentialDto): Promise<User> {
     const { username, password } = userCredentialDto;
     /* generate random salt from bcrypt */
-    const salt = bcrypt.genSaltSync()
+    const salt = bcrypt.genSaltSync();
 
     const user = new User();
     user.username = username;
-    user.password = await bcrypt.hashSync(password,salt)
-    user.salt = salt
+    user.password = await bcrypt.hashSync(password, salt);
+    user.salt = salt;
     try {
       await user.save();
     } catch (error) {
@@ -27,29 +27,32 @@ export class UserRepository extends Repository<User> {
           'Error, due to this Username already exist',
         );
       } else {
-        throw new InternalServerErrorException('Error while save new user' + error);
+        throw new InternalServerErrorException(
+          'Error while save new user' + error,
+        );
       }
     }
 
     return user;
   }
 
-
-  async verifyUserPassword(userCredentialDto:UserCredentialDto):Promise<string> {
-    const { username, password } = userCredentialDto
-    const user = await this.findOne({username:username})
+  async verifyUserPassword(
+    userCredentialDto: UserCredentialDto,
+  ): Promise<string> {
+    const { username, password } = userCredentialDto;
+    const user = await this.findOne({ username: username });
     if (user) {
-      const passwordMatched = await bcrypt.compareSync(password,user.password)
+      const passwordMatched = await bcrypt.compareSync(password, user.password);
       if (passwordMatched) {
-        return user.username
-      }else{
-        throw new UnauthorizedException("Password not matched")
+        return user.username;
+      } else {
+        throw new UnauthorizedException('Password not matched');
       }
-    }else{
-      throw new UnauthorizedException("Username not matched")
+    } else {
+      throw new UnauthorizedException('Username not matched');
     }
 
-/*  //   CMDEV
+    /*  //   CMDEV
     const { username, password } = userCredentialDto
     const user = await this.findOne({username:username})
     if (user) {
